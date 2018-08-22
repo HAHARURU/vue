@@ -68,9 +68,10 @@ export default {
   },
   mounted() {
     systemApi.getCity({
-      'cityJSON': 'haru'
+      'name': 'haru',
+      'age': 23
     }).then((response) => {
-
+      debugger
     })
   }
 }

@@ -20,47 +20,40 @@ console.log('Vue.http.options.root: ' + Vue.http.options.root)
 
 router.beforeEach((to, from, next) => {
   // 权限验证，登录跳转
-  next()  //放行
+  next() //放行
 })
 
 router.afterEach((to, from) => {})
 
+//http后台请求拦截器
 Vue.http.interceptors.push((request, next) => {
-  // request.headers['Content-Type'] = 'application/json;charset=UTF-8'
-  // next((response) => {
-  //   if (response.status === 400 || response.status === 401) {
-  //     Vue.$vux.loading.error()
-  //     if (request.method !== 'POST' && request.url !== 'gateway/login' && request.url !== "gateway/logout") {
-  //       //跳到登录页
-  //       router.go('/login');
-  //     } else if (request.url !== 'gateway/login' && request.url !== "gateway/logout") {
-  //       Vue.$Modal.warning({
-  //         title: '提示',
-  //         content: response.body.message,
-  //         okText: '确认',
-  //         onOk: () => {
-  //           //跳到登录页
-  //           router.go('/login');
-  //         }
-  //       });
-  //     }
-  //   } else {
-  //     Vue.$vux.loading.hide()
-  //     if (!response.ok) {
-  //       console.log('fail url: ' + response.url)
-  //       Vue.$vux.toast.show({
-  //         type: 'warn',
-  //         text: '与服务器通信失败'
-  //       })
-  //     } else {
-  //       if (!response.data.success) {
-  //         Vue.$vux.toast.show({
-  //           type: 'warn',
-  //           text: response.data.message
-  //         })
-  //       }
-  //     }
-  //     return response
-  //   }
-  // })
+  var route = router;
+  request.headers['Access-Control-Allow-Origin'] = '*'
+  request.headers['Content-Type'] = 'application/json;charset=UTF-8'
+  next((response) => {
+    if (response.status === 400 || response.status === 401) {
+      if (request.method !== 'POST' && request.url !== 'gateway/login' && request.url !== "gateway/logout") {
+        //跳到登录页
+        route.push({
+          path: 'home'
+        });
+      } else if (request.url !== 'gateway/login' && request.url !== "gateway/logout") {
+        // 提示框，确定跳到登录页
+        route.push({
+          path: 'home'
+        });
+      }
+    } else {
+      if (!response.ok) {
+        // 可以用弹出框提示
+        console.log('与服务器通信失败: ' + response.url);
+      } else {
+        if (!response.data.code || response.data.code !== '200') {
+          // 可以用弹出框提示
+          console.log(response.data.message);
+        }
+      }
+      return response
+    }
+  })
 })
