@@ -67,11 +67,8 @@ export default {
     }
   },
   mounted() {
-    systemApi.getCity({
-      'name': 'haru',
-      'age': 23
-    }).then((response) => {
-      debugger
+    systemApi.testAxios(this.$axios, this.$qs.stringify({ 'name': 'haru', 'age': 23 })).then((response) => {
+      console.log(response)
     })
   }
 }

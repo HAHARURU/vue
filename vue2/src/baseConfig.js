@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
+import axios from 'axios'
 import ApiUrl from './appUrl.js'
 import router from './router'
 import store from './store'
+import qs from 'qs'
 import sysApi from '@/api/systemApi'
 import {
   sync
@@ -11,12 +13,21 @@ import {
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
+Vue.prototype.$axios = axios;
+Vue.prototype.$qs = qs;
 sync(store, router)
 
 const url = ApiUrl.api(__MODE__) + (ApiUrl.port(__MODE__) === '' ? '' : ':' + ApiUrl.port(__MODE__)) + ApiUrl.contextPath(__MODE__)
+// vue-resource
 Vue.http.options.emulateJSON = true
 Vue.http.options.root = url
 console.log('Vue.http.options.root: ' + Vue.http.options.root)
+
+// axios
+axios.defaults.baseURL = url
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
+axios.defaults.emulateJSON = true
 
 router.beforeEach((to, from, next) => {
   // 权限验证，登录跳转
@@ -25,8 +36,27 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {})
 
-//http后台请求拦截器
+// axios添加请求拦截器
+axios.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
+  return config;
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error);
+});
+
+// axios添加响应拦截器
+axios.interceptors.response.use(function (response) {
+  // 对响应数据做点什么
+  return response;
+}, function (error) {
+  // 对响应错误做点什么
+  return Promise.reject(error);
+});
+
+//vue-resource http后台请求拦截器
 Vue.http.interceptors.push((request, next) => {
+  debugger
   var route = router;
   request.headers['Access-Control-Allow-Origin'] = '*'
   request.headers['Content-Type'] = 'application/json;charset=UTF-8'

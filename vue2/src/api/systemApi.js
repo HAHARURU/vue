@@ -1,7 +1,10 @@
 import Vue from 'vue'
 
 export default {
-  getCity(params){
-    return Vue.http.post('country/CountryService/test',params)
-  }
+  test(params) {
+    return Vue.http.post('country/CountryService/test', params)
+  },
+  testAxios(axios, params) {
+    return axios.post('country/CountryService/test', params)
+  },
 }
