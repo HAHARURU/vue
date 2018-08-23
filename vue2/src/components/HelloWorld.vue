@@ -67,7 +67,7 @@ export default {
     }
   },
   mounted() {
-    systemApi.testAxios(this.$axios, this.$qs.stringify({ 'name': 'haru', 'age': 23 })).then((response) => {
+    systemApi.testAxios(this.$qs.stringify({ 'name': 'haru', 'age': 23 })).then((response) => {
       console.log(response)
     })
   }
