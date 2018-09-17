@@ -68,6 +68,7 @@ export default {
   },
   mounted() {
     systemApi.testAxios(this.$qs.stringify({ 'name': 'haru', 'age': 23 })).then((response) => {
+      debugger
       console.log(response)
     })
   }

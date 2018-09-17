@@ -5,6 +5,8 @@ import App from './App'
 import './baseconfig'
 import router from './router'
 
+require('./mockData')
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
