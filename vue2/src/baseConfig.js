@@ -28,6 +28,7 @@ axios.defaults.baseURL = url
 axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8'
 axios.defaults.emulateJSON = true
+axios.defaults.withCredentials = true
 
 router.beforeEach((to, from, next) => {
   // 权限验证，登录跳转
