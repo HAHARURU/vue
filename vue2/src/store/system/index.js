@@ -11,6 +11,7 @@ const mutations = {
     state.init = init
   },
   'setData' (state, data) {
+    // 赋值操作
     state.data = data
   },
   'getImg' (state, img) {
