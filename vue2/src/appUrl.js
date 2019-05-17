@@ -6,11 +6,11 @@ export default {
     if (mode === 'DEV' || mode === 'MOCK') {
       return protocol + 'localhost'
     } else if (mode === 'CS') {
-      return protocol + 'cs.gsh56.com'
+      return protocol + 'localhost'
     } else if (mode === 'PRE') {
-      return protocol + 'pre.gsh56.com'
+      return protocol + 'localhost'
     } else if (mode === 'PROD') {
-      return protocol + 'www.gsh56.com'
+      return protocol + 'localhost'
     } else {
       return protocol + 'localhost'
     }
@@ -18,7 +18,7 @@ export default {
 
   port: mode => {
     if (mode === 'DEV' || mode === 'MOCK') {
-      return '4001'
+      return '1001'
     } else if (mode === 'CS') {
       return ''
     } else if (mode === 'PRE') {
@@ -26,7 +26,7 @@ export default {
     } else if (mode === 'PROD') {
       return ''
     } else {
-      return '4001'
+      return '1001'
     }
   },
 

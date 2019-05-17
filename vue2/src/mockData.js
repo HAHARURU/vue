@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-Mock.mock('http://localhost:4001/country/CountryService/test', {
+Mock.mock('http://localhost:1001/country/CountryService/test', {
     success: true,
     msg: 'OK',
     data: {
